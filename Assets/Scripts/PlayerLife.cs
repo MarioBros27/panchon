@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PlayerLife : MonoBehaviour
              life -= 1;
              lifeText.text = "" + life;
              if(life <= 0){
-                 
+                 SceneManager.LoadScene("Start");
              }
          }
      }

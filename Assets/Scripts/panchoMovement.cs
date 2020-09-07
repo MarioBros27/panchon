@@ -14,41 +14,32 @@ public class panchoMovement : MonoBehaviour
     public float deltaDistance;
     public float escapingDistance;
     public Transform background;
-
+    public bool rightBool = false;
+    public bool leftBool = false;
     public Text counter;
     private bool facingRight = true;
 
     private int distance = 0;
 
     void FixedUpdate(){
-        if(Input.GetKey(KeyCode.RightArrow))
+        // if(Input.GetKey(KeyCode.RightArrow))
+        if(rightBool == true &&leftBool ==false)
+
               {
-                  facingRight = true;
-                  Vector3 desiredPosition = Vector3.right * moveSpeed * Time.deltaTime;
-                 transform.position += desiredPosition;
-                 if(transform.position.x - cam.position.x > deltaDistance){
-                    moveCameraRight(transform.position);
-                 }
-                  
-                  spriteRenderer.flipX = false;
-                  
+                 
+                  moveRight();
               }
-              else if(Input.GetKey(KeyCode.LeftArrow))
+        if(leftBool == true && rightBool == false)
               {
-                  facingRight = false;
-                  spriteRenderer.flipX = true;
-                  if(Mathf.Abs(cam.position.x - transform.position.x) < escapingDistance){
-                        transform.position += Vector3.right * -moveSpeed * Time.deltaTime;
-                  }
-               
+                  moveLeft();
               }
         
         if(Input.GetKeyDown(KeyCode.Space)){
-            throwWeapon(0);
+            throwWeapon();
         }
     }
 
-    public void throwWeapon(int value){
+    public void throwWeapon(){
         if(facingRight){
             GameObject tmp = (GameObject)Instantiate(weapon, transform.position, Quaternion.identity);
             tmp.GetComponent<weapon>().initialize(Vector2.right);
@@ -64,5 +55,36 @@ public class panchoMovement : MonoBehaviour
             counter.text = ""+distance;
             cam.position = smoothedPosition;
             background.position = new Vector3(cam.position.x, background.position.y, background.position.z);
+    }
+    public void moveLeft(){
+        facingRight = false;
+                  spriteRenderer.flipX = true;
+                  if(Mathf.Abs(cam.position.x - transform.position.x) < escapingDistance){
+                        transform.position += Vector3.right * -moveSpeed * Time.deltaTime;
+                  }
+               
+    }
+    public void moveRight(){
+
+        facingRight = true;
+        Vector3 desiredPosition = Vector3.right * moveSpeed * Time.deltaTime;
+        transform.position += desiredPosition;
+        if(transform.position.x - cam.position.x > deltaDistance){
+        moveCameraRight(transform.position);
+        }
+        
+        spriteRenderer.flipX = false;
+    }
+    public void setRightTrue(){
+        this.rightBool = true;
+    }
+    public void setRightFalse(){
+        this.rightBool = false;
+    }
+    public void setLeftTrue(){
+        this.leftBool = true;
+    }
+    public void setLeftFalse(){
+        this.leftBool = false;
     }
 }
