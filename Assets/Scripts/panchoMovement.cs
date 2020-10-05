@@ -16,75 +16,102 @@ public class panchoMovement : MonoBehaviour
     public Transform background;
     public bool rightBool = false;
     public bool leftBool = false;
-    public Text counter;
     private bool facingRight = true;
+    public Animator animator;
 
-    private int distance = 0;
-
-    void FixedUpdate(){
+    Vector3 oldPosition = new Vector3(0,0,0);
+    void FixedUpdate()
+    {
         // if(Input.GetKey(KeyCode.RightArrow))
-        if(rightBool == true &&leftBool ==false)
+        Vector3 newPosition = transform.position;
+        if(newPosition == oldPosition){
+            animator.SetBool("walking", false);
+            oldPosition = newPosition;
+        }
 
-              {
-                 
-                  moveRight();
-              }
-        if(leftBool == true && rightBool == false)
-              {
-                  moveLeft();
-              }
-        
-        if(Input.GetKeyDown(KeyCode.Space)){
+        if (rightBool == true && leftBool == false)
+
+        {
+
+            moveRight();
+            oldPosition = transform.position;
+        }
+        if (leftBool == true && rightBool == false)
+        {
+
+            moveLeft();
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             throwWeapon();
         }
     }
 
-    public void throwWeapon(){
-        if(facingRight){
+    public void throwWeapon()
+    {
+        if (facingRight)
+        {
             GameObject tmp = (GameObject)Instantiate(weapon, transform.position, Quaternion.identity);
             tmp.GetComponent<weapon>().initialize(Vector2.right);
-        }else{
+        }
+        else
+        {
             GameObject tmp = (GameObject)Instantiate(weaponLeft, transform.position, Quaternion.identity);
             tmp.GetComponent<weapon>().initialize(Vector2.left);
         }
     }
-    void moveCameraRight(Vector3 desiredPosition){
-            // Vector3 smoothedPosition = Vector3.Lerp(cam.position, desiredPosition + offset, moveSpeed*Time.deltaTime);
-            Vector3 smoothedPosition =  desiredPosition + offset;
-            distance += 1;
-            counter.text = ""+distance;
-            cam.position = smoothedPosition;
-            background.position = new Vector3(cam.position.x, background.position.y, background.position.z);
+    void moveCameraRight(Vector3 desiredPosition)
+    {
+        // Vector3 smoothedPosition = Vector3.Lerp(cam.position, desiredPosition + offset, moveSpeed*Time.deltaTime);
+        Vector3 smoothedPosition = desiredPosition + offset;
+        
+        cam.position = smoothedPosition;
+        background.position = new Vector3(cam.position.x, background.position.y, background.position.z);
     }
-    public void moveLeft(){
+    public void moveLeft()
+    {
         facingRight = false;
-                  spriteRenderer.flipX = true;
-                  if(Mathf.Abs(cam.position.x - transform.position.x) < escapingDistance){
-                        transform.position += Vector3.right * -moveSpeed * Time.deltaTime;
-                  }
-               
+        spriteRenderer.flipX = true;
+        if (Mathf.Abs(cam.position.x - transform.position.x) < escapingDistance)
+        {
+            transform.position += Vector3.right * -moveSpeed * Time.deltaTime;
+            oldPosition = transform.position;
+            animator.SetBool("walking",true);
+        }
+
     }
-    public void moveRight(){
+    public void moveRight()
+    {
 
         facingRight = true;
+        
         Vector3 desiredPosition = Vector3.right * moveSpeed * Time.deltaTime;
         transform.position += desiredPosition;
-        if(transform.position.x - cam.position.x > deltaDistance){
-        moveCameraRight(transform.position);
+        oldPosition = transform.position;
+        animator.SetBool("walking", true);
+        if (transform.position.x - cam.position.x > deltaDistance)
+        {
+            moveCameraRight(transform.position);
         }
-        
+
         spriteRenderer.flipX = false;
     }
-    public void setRightTrue(){
+    public void setRightTrue()
+    {
         this.rightBool = true;
     }
-    public void setRightFalse(){
+    public void setRightFalse()
+    {
         this.rightBool = false;
     }
-    public void setLeftTrue(){
+    public void setLeftTrue()
+    {
         this.leftBool = true;
     }
-    public void setLeftFalse(){
+    public void setLeftFalse()
+    {
         this.leftBool = false;
     }
 }
