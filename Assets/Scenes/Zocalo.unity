@@ -774,10 +774,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jorge: {fileID: 4177741899779639826, guid: f4de61c2ad37c4b67871d0376799cc88, type: 3}
-  minTime: 3
-  maxTime: 6
+  jorgeLeft: {fileID: 4177741899779639826, guid: 280eadbce263d4b82958fc5bac769a96, type: 3}
+  minTime: 0.5
+  maxTime: 1.5
   minDistance: 8
-  maxDistance: 12
+  maxDistance: 10
 --- !u!50 &709369158
 Rigidbody2D:
   serializedVersion: 4

@@ -6,6 +6,7 @@ public class PlayingManager : MonoBehaviour
 {
     private GameObject player;
     public GameObject jorge;
+    public GameObject jorgeLeft;
     public float minTime;
     public float maxTime;
 
@@ -61,7 +62,7 @@ public class PlayingManager : MonoBehaviour
         else
         {
             //spawn to the left
-            GameObject jorgito = (GameObject)Instantiate(jorge, new Vector3(me.position.x - randomRange, -1.9f, 0f), Quaternion.identity);
+            GameObject jorgito = (GameObject)Instantiate(jorgeLeft, new Vector3(me.position.x - randomRange, -1.9f, 0f), Quaternion.identity);
 
             Transform transform = jorgito.GetComponent<Transform>();
             transform.localScale = new Vector3(-0.8f, 0.8f, 0.8f);
