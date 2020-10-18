@@ -37,7 +37,7 @@ public class PlayingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     void setRandomTime()
     {
@@ -53,10 +53,10 @@ public class PlayingManager : MonoBehaviour
 
         Transform me = player.GetComponent<Transform>();
 
-        if(directionRandom > 5)
+        if (directionRandom > 3)
         {
             //Spawn to the right
-            GameObject jorgito = (GameObject) Instantiate(jorge, new Vector3(me.position.x + randomRange, -1.9f, 0f), Quaternion.identity);
+            GameObject jorgito = (GameObject)Instantiate(jorge, new Vector3(me.position.x + randomRange, -1.9f, 0f), Quaternion.identity);
 
         }
         else
@@ -68,7 +68,7 @@ public class PlayingManager : MonoBehaviour
             transform.localScale = new Vector3(-0.8f, 0.8f, 0.8f);
         }
 
-        
+
 
     }
 }

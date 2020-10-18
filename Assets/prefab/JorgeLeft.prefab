@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9085234030819146621}
   - component: {fileID: -4123715324251667105}
   - component: {fileID: 7664197539423851576}
+  - component: {fileID: -83751540545341775}
   m_Layer: 0
   m_Name: JorgeLeft
   m_TagString: enemy
@@ -158,6 +159,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-83751540545341775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177741899779639826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8e3e066bbf74e65adbcfbfd7c5b010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 7664727926380578904}
 --- !u!1 &7664727926380578904
 GameObject:
   m_ObjectHideFlags: 0

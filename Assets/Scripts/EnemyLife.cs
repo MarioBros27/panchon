@@ -5,10 +5,13 @@ using UnityEngine;
 public class EnemyLife : MonoBehaviour
 {
     private int life;
+    private float timeToSelfDestroy = 15;
+    private float time;
     // Start is called before the first frame update
     void Start()
     {
         life = Random.Range(1,3);
+         time = 0;
     }
 
     // Update is called once per frame
@@ -27,5 +30,13 @@ public class EnemyLife : MonoBehaviour
              }
          }
      }
+     void FixedUpdate(){
+        time += Time.deltaTime;
+
+        if (time >= timeToSelfDestroy)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 }

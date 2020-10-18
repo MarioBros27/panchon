@@ -9,7 +9,7 @@ public class panchoMovement : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public GameObject weapon;
     public GameObject weaponLeft;
-    public Vector3 offset;
+    private Vector3 offset;
     public Transform cam;
     public float deltaDistance;
     public float escapingDistance;
@@ -19,12 +19,18 @@ public class panchoMovement : MonoBehaviour
     private bool facingRight = true;
     public Animator animator;
 
-    Vector3 oldPosition = new Vector3(0,0,0);
+    Vector3 oldPosition = new Vector3(0, 0, 0);
+
+    void Start()
+    {
+        offset = new Vector3(deltaDistance * -1f, 1.7f, -10f);
+    }
     void FixedUpdate()
     {
         // if(Input.GetKey(KeyCode.RightArrow))
         Vector3 newPosition = transform.position;
-        if(newPosition == oldPosition){
+        if (newPosition == oldPosition)
+        {
             animator.SetBool("walking", false);
             oldPosition = newPosition;
         }
@@ -40,7 +46,7 @@ public class panchoMovement : MonoBehaviour
         {
 
             moveLeft();
-            
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -51,22 +57,26 @@ public class panchoMovement : MonoBehaviour
 
     public void throwWeapon()
     {
-        if (facingRight)
+        if (!rightBool && !leftBool)
         {
-            GameObject tmp = (GameObject)Instantiate(weapon, transform.position, Quaternion.identity);
-            tmp.GetComponent<weapon>().initialize(Vector2.right);
+            if (facingRight)
+            {
+                GameObject tmp = (GameObject)Instantiate(weapon, transform.position, Quaternion.identity);
+                tmp.GetComponent<weapon>().initialize(Vector2.right);
+            }
+            else
+            {
+                GameObject tmp = (GameObject)Instantiate(weaponLeft, transform.position, Quaternion.identity);
+                tmp.GetComponent<weapon>().initialize(Vector2.left);
+            }
         }
-        else
-        {
-            GameObject tmp = (GameObject)Instantiate(weaponLeft, transform.position, Quaternion.identity);
-            tmp.GetComponent<weapon>().initialize(Vector2.left);
-        }
+
     }
     void moveCameraRight(Vector3 desiredPosition)
     {
         // Vector3 smoothedPosition = Vector3.Lerp(cam.position, desiredPosition + offset, moveSpeed*Time.deltaTime);
         Vector3 smoothedPosition = desiredPosition + offset;
-        
+
         cam.position = smoothedPosition;
         background.position = new Vector3(cam.position.x, background.position.y, background.position.z);
     }
@@ -78,7 +88,7 @@ public class panchoMovement : MonoBehaviour
         {
             transform.position += Vector3.right * -moveSpeed * Time.deltaTime;
             oldPosition = transform.position;
-            animator.SetBool("walking",true);
+            animator.SetBool("walking", true);
         }
 
     }
@@ -86,7 +96,7 @@ public class panchoMovement : MonoBehaviour
     {
 
         facingRight = true;
-        
+
         Vector3 desiredPosition = Vector3.right * moveSpeed * Time.deltaTime;
         transform.position += desiredPosition;
         oldPosition = transform.position;

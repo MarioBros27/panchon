@@ -6,17 +6,35 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    public int life = 3;
+    private int life = 1;
+    AudioSource audioData;
     public Text lifeText;
-
-    void OnTriggerEnter2D(Collider2D other){
-         if(other.gameObject.tag == "enemy"){
+    void Start()
+    {
+        audioData = GetComponent<AudioSource>();
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "enemy")
+        {
+            Debug.Log("hey i'm here");
+            audioData.Play();
              Destroy(other.gameObject);
-             life -= 1;
+             if(life>0)life -= 1;
              lifeText.text = "" + life;
-             if(life <= 0){
-                 SceneManager.LoadScene("Start");
-             }
-         }
-     }
+             
+        }
+    }
+    void FixedUpdate()
+    {
+        if (life <= 0 && audioData.isPlaying==false)
+        {
+            SceneManager.LoadScene("Start");
+        }
+    }
+    IEnumerator playSound()
+    {
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(6f);
+    }
 }

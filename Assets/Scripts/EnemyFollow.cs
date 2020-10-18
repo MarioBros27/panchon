@@ -7,12 +7,13 @@ public class EnemyFollow : MonoBehaviour
     private Transform targetPlayer;
     public float speed;
     public float distance;
-
+    private float distanceToSelfDestroy = 20;
+    
     // Start is called before the first frame update
     void Start()
     {
         targetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
- 
+       
     }
 
     // Update is called once per frame
@@ -22,11 +23,12 @@ public class EnemyFollow : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPlayer.position, speed * Time.deltaTime);    
         }
         if(transform.position.x< targetPlayer.position.x){
-            transform.localScale = new Vector3(-0.8f,0.8f,0.8f);
-        }else{
-            transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+            if(targetPlayer.position.x - transform.position.x > distanceToSelfDestroy){
+                Destroy(gameObject);
+            }
         }
     }
+    
 
     //When touched by weapon trigger enter GameObject by tag == weapon || weaponright -> decrease life
     //If life is == 0 destroy 
